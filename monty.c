@@ -1,5 +1,4 @@
 #include "monty.h"
-arg_holder_t arg_holder = {NULL, 1, NULL, NULL};
 
 /**
  * main - Main program running byte code.
@@ -9,6 +8,8 @@ arg_holder_t arg_holder = {NULL, 1, NULL, NULL};
  */
 int main(int argc, char **argv)
 {
+	arg_holder_t arg_holder = {NULL, 1, NULL, NULL};
+
 	if (argc != 2)
 	{
 		printf("USAGE: monty file\n");
@@ -24,41 +25,42 @@ int main(int argc, char **argv)
  */
 void runByteCode(char *filename)
 {
-    char line[MAX_LINE_LENGTH];
-    char *command = NULL;
-    unsigned int line_number = 1;
-    stack_t *stack = NULL;
-    FILE *file = fopen(filename, "r");
+	char line[MAX_LINE_LENGTH];
+	char *command = NULL;
+	unsigned int line_number = 1;
+	stack_t *stack = NULL;
+	FILE *file = fopen(filename, "r");
 
-    if (file == NULL)
-    {
-        printf("Error: Can't open file %s\n", filename);
-        exit(EXIT_FAILURE);
-    }
+	if (file == NULL)
+	{
+		printf("Error: Can't open file %s\n", filename);
+		exit(EXIT_FAILURE);
+	}
 
-    while (fgets(line, sizeof(line), file) != NULL)
-    {
-        if (*line == '\n')
-        {
-            line_number++;
-            continue;
-        }
+	while (fgets(line, sizeof(line), file) != NULL)
+	{
+		if (*line == '\n')
+		{
+			line_number++;
+			continue;
+		}
 
-        command = strtok(line, "\n\t ");
-        if (command == NULL)
-        {
-            line_number++;
-            continue;
-        }
+		command = strtok(line, "\n\t ");
+		if (command == NULL)
+		{
+			line_number++;
+			continue;
+		}
 
-        arg_holder.arg = strtok(NULL, "\n\t ");
-        opcode(command, line_number, &stack);
-        line_number++;
-    }
+		arg_holder.arg = strtok(NULL, "\n\t ");
+		opcode(command, line_number, &stack);
+		line_number++;
+	}
 
-    free_stack(&stack);
-    fclose(file);
+	free_stack(&stack);
+	fclose(file);
 }
+
 /**
  * opcode - Check for operation code.
  * @command: Command input.
@@ -87,27 +89,22 @@ void opcode(char *command, unsigned int line_number, stack_t **stack)
 		{NULL, NULL}
 	};
 	if (command[0] == '#')
-	{
-		return;
+	{ return;
 	}
 	if (strcmp(command, "stack") == 0)
-	{
-		arg_holder.SQ = 1;
+	{ arg_holder.SQ = 1;
 		return;
 	}
 	if (strcmp(command, "queue") == 0)
-	{
-		arg_holder.SQ = 0;
+	{ arg_holder.SQ = 0;
 		return;
 	}
 	while (ops[i].opcode != NULL)
 	{
 		if (strcmp(ops[i].opcode, command) == 0)
-		{
-			ops[i].f(stack, line_number);
+		{ ops[i].f(stack, line_number);
 			return;
-		}
-		i++;
+		} i++;
 	}
 	printf("L%d: unknown instruction %s\n", line_number, command);
 	free_stack(stack);
@@ -124,6 +121,7 @@ void free_stack(stack_t **head)
 
 	if (head == NULL)
 		return;
+
 	free(arg_holder.input_str);
 	fclose(arg_holder.file);
 
@@ -131,6 +129,5 @@ void free_stack(stack_t **head)
 	{
 		current = (*head)->next;
 		free(*head);
-		*head = current;
 	}
 }
