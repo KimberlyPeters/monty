@@ -1,7 +1,11 @@
 #include "monty.h"
 
-arg_holder_t arg_holder = {NULL, 1, NULL, NULL};
-
+/**
+ * main - Main program running byte code.
+ * @argc: Number of arguments.
+ * @argv: Argument in matrix.
+ * Return: Return exit success.
+ */
 int main(int argc, char **argv)
 {
 	arg_holder.arg = NULL;
@@ -17,9 +21,12 @@ int main(int argc, char **argv)
 
 	runByteCode(argv[1]);
 
-	return EXIT_SUCCESS;
+	return (EXIT_SUCCESS);
 }
-
+/**
+ * runByteCode - Runs the Monty byte code from a file.
+ * @filename: Name of the file containing Monty byte code.
+ */
 void runByteCode(char *filename)
 {
 	char line[MAX_LINE_LENGTH];
@@ -57,7 +64,12 @@ void runByteCode(char *filename)
 	free_stack(&stack);
 	fclose(file);
 }
-
+/**
+ * opcode - Check for operation code.
+ * @command: Command input.
+ * @line_number: Line number.
+ * @stack: Stack of memory.
+ */
 void opcode(char *command, unsigned int line_number, stack_t **stack)
 {
 	int i = 0;
@@ -111,7 +123,10 @@ void opcode(char *command, unsigned int line_number, stack_t **stack)
 	free_stack(stack);
 	exit(EXIT_FAILURE);
 }
-
+/**
+ * free_stack - Free the stack and the input string.
+ * @head: Input list pointer.
+ */
 void free_stack(stack_t **head)
 {
 	stack_t *current;
