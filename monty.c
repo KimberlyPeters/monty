@@ -23,40 +23,41 @@ int main(int argc, char **argv)
  */
 void runByteCode(char *filename)
 {
-	size_t buffer_size = 0;
-	FILE *file = NULL;
-	char *line = NULL;
-	unsigned int line_number = 1;
-	stack_t *stack = NULL;
-	char *command = NULL;
+    char line[MAX_LINE_LENGTH];
+    char *command = NULL;
+    unsigned int line_number = 1;
+    stack_t *stack = NULL;
+    FILE *file = fopen(filename, "r");
 
-	file = fopen(filename, "r");
-	if (file == NULL)
-	{
-		printf("Error: Can't open file %s\n", filename);
-		exit(EXIT_FAILURE);
-	}
-	while (getline(&line, &buffer_size, file) != -1)
-	{
-		if (*line == '\n')
-		{
-			line_number++;
-			continue;
-		}
-		command = strtok(line, "\n\t ");
-		if (command == NULL)
-		{
-			line_number++;
-			continue;
-		}
-		arg_holder.arg = strtok(NULL, "\n\t ");
-		opcode(command, line_number, &stack);
-		line_number++;
-	}
-	free_stack(&stack);
-	fclose(file);
+    if (file == NULL)
+    {
+        printf("Error: Can't open file %s\n", filename);
+        exit(EXIT_FAILURE);
+    }
+
+    while (fgets(line, sizeof(line), file) != NULL)
+    {
+        if (*line == '\n')
+        {
+            line_number++;
+            continue;
+        }
+
+        command = strtok(line, "\n\t ");
+        if (command == NULL)
+        {
+            line_number++;
+            continue;
+        }
+
+        arg_holder.arg = strtok(NULL, "\n\t ");
+        opcode(command, line_number, &stack);
+        line_number++;
+    }
+
+    free_stack(&stack);
+    fclose(file);
 }
-
 /**
  * opcode - Check for operation code.
  * @command: Command input.
