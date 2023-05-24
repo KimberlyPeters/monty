@@ -1,12 +1,12 @@
 #include "monty.h"
 
 /**
- * push - Adds a node to the stack.
+ * f_push - Adds a node to the stack.
  * @stack: Pointer to the head of the stack.
  * @line_number: Line number.
  * Return: No return value.
  */
-void push(stack_t **stack, unsigned int line_number)
+void f_push(stack_t **stack, unsigned int line_number)
 {
 	int num, i = 0, invalid_flag = 0;
 
@@ -21,7 +21,7 @@ void push(stack_t **stack, unsigned int line_number)
 		}
 		if (invalid_flag == 1)
 		{
-			fprintf(stderr, "L%d: usage: push integer\n", line_number);
+			fprintf(stderr, "L%d: usage: f_push integer\n", line_number);
 			fclose(bus.file);
 			free(bus.content);
 			free_stack(*stack);
@@ -30,7 +30,7 @@ void push(stack_t **stack, unsigned int line_number)
 	}
 	else
 	{
-		fprintf(stderr, "L%d: usage: push integer\n", line_number);
+		fprintf(stderr, "L%d: usage: f_push integer\n", line_number);
 		fclose(bus.file);
 		free(bus.content);
 		free_stack(*stack);

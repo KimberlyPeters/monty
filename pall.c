@@ -1,11 +1,11 @@
 #include "monty.h"
 
 /**
- * pall - Prints the elements of the stack.
+ * f_pall - Prints the elements of the stack.
  * @stack: Pointer to the head of the stack.
  * @line_number: Line number (unused).
  */
-void pall(stack_t **stack, unsigned int line_number)
+void f_pall(stack_t **stack, unsigned int line_number)
 {
 	stack_t *current_node;
 
