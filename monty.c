@@ -1,4 +1,8 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "monty.h"
+
 arg_holder_t arg_holder = {NULL, 1, NULL, NULL};
 
 /**
@@ -9,13 +13,13 @@ arg_holder_t arg_holder = {NULL, 1, NULL, NULL};
  */
 int main(int argc, char **argv)
 {
-	if (argc != 2)
-	{
-		printf("USAGE: monty file\n");
-		exit(EXIT_FAILURE);
-	}
-	runByteCode(argv[1]);
-	return (EXIT_SUCCESS);
+    if (argc != 2)
+    {
+        printf("USAGE: monty file\n");
+        exit(EXIT_FAILURE);
+    }
+    runByteCode(argv[1]);
+    return EXIT_SUCCESS;
 }
 
 /**
@@ -35,6 +39,11 @@ void runByteCode(char *filename)
         printf("Error: Can't open file %s\n", filename);
         exit(EXIT_FAILURE);
     }
+
+    arg_holder.arg = NULL;
+    arg_holder.SQ = 1;
+    arg_holder.input_str = NULL;
+    arg_holder.file = file;
 
     while (fgets(line, sizeof(line), file) != NULL)
     {
@@ -59,6 +68,7 @@ void runByteCode(char *filename)
     free_stack(&stack);
     fclose(file);
 }
+
 /**
  * opcode - Check for operation code.
  * @command: Command input.
@@ -120,17 +130,18 @@ void opcode(char *command, unsigned int line_number, stack_t **stack)
  */
 void free_stack(stack_t **head)
 {
-	stack_t *current;
+    stack_t *current;
 
-	if (head == NULL)
-		return;
-	free(arg_holder.input_str);
-	fclose(arg_holder.file);
+    if (head == NULL)
+        return;
 
-	while (*head != NULL)
-	{
-		current = (*head)->next;
-		free(*head);
-		*head = current;
-	}
+    free(arg_holder.input_str);
+    fclose(arg_holder.file);
+
+    while (*head != NULL)
+    {
+        current = (*head)->next;
+        free(*head);
+        *head = current;
+    }
 }

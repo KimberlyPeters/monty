@@ -42,15 +42,6 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-typedef struct {
-    char *arg;
-    int SQ;
-    char *input_str;
-    FILE *file;
-} arg_holder_t;
-
-arg_holder_t arg_holder;
-
 /* Global Variables */
 
 /**
@@ -62,12 +53,11 @@ arg_holder_t arg_holder;
  *
  * Description: Global structure to hold program arguments and input data
  */
-typedef struct arg_holder_s
-{
-	char *input_str;
-	char *arg;
-	FILE *file;
-	int SQ;
+typedef struct {
+    char *arg;
+    int SQ;
+    char *input_str;
+    FILE *file;
 } arg_holder_t;
 
 extern arg_holder_t arg_holder;
