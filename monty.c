@@ -36,7 +36,6 @@ void runByteCode(char *filename)
 		printf("Error: Can't open file %s\n", filename);
 		exit(EXIT_FAILURE);
 	}
-
 	while (getline(&line, &buffer_size, file) != -1)
 	{
 		if (*line == '\n')
@@ -44,19 +43,16 @@ void runByteCode(char *filename)
 			line_number++;
 			continue;
 		}
-
 		command = strtok(line, "\n\t ");
 		if (command == NULL)
 		{
 			line_number++;
 			continue;
 		}
-
 		arg_holder.arg = strtok(NULL, "\n\t ");
 		opcode(command, line_number, &stack);
 		line_number++;
 	}
-
 	free_stack(&stack);
 	fclose(file);
 }
@@ -88,24 +84,20 @@ void opcode(char *command, unsigned int line_number, stack_t **stack)
 		{"rotr", rotr},
 		{NULL, NULL}
 	};
-
 	if (command[0] == '#')
 	{
 		return;
 	}
-
 	if (strcmp(command, "stack") == 0)
 	{
 		arg_holder.SQ = 1;
 		return;
 	}
-
 	if (strcmp(command, "queue") == 0)
 	{
 		arg_holder.SQ = 0;
 		return;
 	}
-
 	while (ops[i].opcode != NULL)
 	{
 		if (strcmp(ops[i].opcode, command) == 0)
@@ -115,7 +107,6 @@ void opcode(char *command, unsigned int line_number, stack_t **stack)
 		}
 		i++;
 	}
-
 	printf("L%d: unknown instruction %s\n", line_number, command);
 	free_stack(stack);
 	exit(EXIT_FAILURE);
@@ -131,7 +122,6 @@ void free_stack(stack_t **head)
 
 	if (head == NULL)
 		return;
-
 	free(arg_holder.input_str);
 	fclose(arg_holder.file);
 
