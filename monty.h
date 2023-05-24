@@ -42,6 +42,15 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
+typedef struct {
+    char *arg;
+    int SQ;
+    char *input_str;
+    FILE *file;
+} arg_holder_t;
+
+arg_holder_t arg_holder;
+
 /* Global Variables */
 
 /**

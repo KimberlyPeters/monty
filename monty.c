@@ -1,4 +1,5 @@
 #include "monty.h"
+arg_holder_t arg_holder = {NULL, 1, NULL, NULL};
 
 /**
  * main - Main program running byte code.
