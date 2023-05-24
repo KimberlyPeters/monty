@@ -41,4 +41,13 @@ void push(stack_t **stack, unsigned int line_num)
 	new = malloc(sizeof(stack_t));
 	if (new == NULL)
 	{
+		fprintf(stderr, "Error: malloc failed\n");
+		free_stack(stack);
+		exit(EXIT_FAILURE);
+	}
 
+	if (arg_holder.SQ)
+		_stack(stack, new);
+	else
+		_queue(stack, new);
+}
