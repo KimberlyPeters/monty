@@ -1,19 +1,19 @@
 #include "monty.h"
 /**
- * f_div - divides the top two elements of the stack.
- * @head: stack head
+ * f_div - a function that divides the top two elements of stack.
+ * @head: head of stack
  * @counter: line_number
- * Return: no return
+ * Return: no
 */
 void f_div(stack_t **head, unsigned int counter)
 {
 	stack_t *h;
-	int len = 0, aux;
+	int len = 0, auxil;
 
 	h = *head;
-	while (h)
+	
+	for (h = *head; h != NULL; h = h->next)
 	{
-		h = h->next;
 		len++;
 	}
 	if (len < 2)
@@ -33,8 +33,8 @@ void f_div(stack_t **head, unsigned int counter)
 		free_stack(*head);
 		exit(EXIT_FAILURE);
 	}
-	aux = h->next->n / h->n;
-	h->next->n = aux;
+	auxil = h->next->n / h->n;
+	h->next->n = auxil;
 	*head = h->next;
 	free(h);
 }
